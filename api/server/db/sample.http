@@ -1,0 +1,11 @@
+
+POST http://192.168.0.10:4000/api/clientes/registrar
+Content-Type: application/json
+
+{
+    "nombres" : "Panaderia Isabella",
+    "username" : "gabriel",
+    "telefono": "3652417",
+    "email" : "gabgpa@gmail.com",
+    "direccion" : "av de la nada"
+}
