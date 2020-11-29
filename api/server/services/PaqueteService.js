@@ -17,7 +17,7 @@ class PaqueteService {
                     offset: der,
                     limit: num,
                     order: [['id', 'ASC'],],
-                    attributes: ['id', 'nombre', 'tiempo', 'valor'],
+                    attributes: ['id', 'nombre', 'valor'],
                 })
                 .then(Paquetes =>
                     resolve({ 'paginas': (Math.ceil(Paquetes.count / num)), 'pagina': page, 'total': Paquetes.count, 'data': Paquetes.rows }))

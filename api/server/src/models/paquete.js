@@ -15,10 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Paquete.init({
     nombre: DataTypes.STRING,
-    valor: DataTypes.DECIMAL,
-    tiempo: DataTypes.INTEGER,
-    fInicio: DataTypes.DATE,
-    fFin: DataTypes.DATE
+    valor: DataTypes.DECIMAL    
   }, {
     sequelize,
     modelName: 'Paquete',

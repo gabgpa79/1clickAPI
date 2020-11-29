@@ -121,8 +121,7 @@ class ClienteService {
     });
   }
 
-  static add(newCliente) {
-
+  static add(newCliente) {    
     return new Promise((resolve, reject) => {
       Cliente.create(newCliente)
         .then((cliente) => resolve(cliente))

@@ -137,11 +137,9 @@ static restorePassword(req, res) {
   static add(req, res) {        
     if (req.body.email) {
       const dato = req.body
-      dato.password = 'onclickbo'
-      dato.hinicio = new Date()
-      dato.hfin = new Date()      
-      dato.registrado = true
-      console.log(dato)
+      dato.password = 'onclickbo'       
+      dato.username = dato.nombres     
+      dato.registrado = true      
       Promise.all([ClienteService.add(dato)])
         .then(([cliente]) => {          
           res.status(200).send({ message: "cliente", result: cliente });

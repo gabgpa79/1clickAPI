@@ -30,11 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     video: DataTypes.STRING,
     username: {
       type: DataTypes.STRING,
-      allowNull: true,
-      unique: true,
-      validate: {
-        len: [5, 10]
-      }
+      allowNull: false,
+      unique: true,      
     },
     password: DataTypes.STRING,
     estado: DataTypes.BOOLEAN,
