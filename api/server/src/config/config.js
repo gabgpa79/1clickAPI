@@ -10,7 +10,7 @@ module.exports = {
     database: "click",
     username: "postgres",
     password: "ileana2121",
-    host: "192.168.0.16",
+    host: "192.168.0.10",
     dialect: "postgres",
   },
 

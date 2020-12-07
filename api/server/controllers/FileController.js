@@ -65,7 +65,20 @@ class FileController {
     Promise.all([FileService.slider(req, res)])
       .then(([file]) => {
         const art = {}
-        art.slider = file.filename
+        console.log(req.params.slider)
+        switch(req.params.slider)
+        {
+          case '1':  
+          art.slider1 = file.filename          
+          break
+          case '2':  
+          art.slider2 = file.filename
+          break
+          case '3':  
+          art.slider3 = file.filename
+          break
+        }
+        
         Promise.all([ClienteService.updt(art, req.params.id)])
           .then(([libro]) => {
             Promise.all([ClienteService.getId(req.params.id)])

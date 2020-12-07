@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     tipo: DataTypes.STRING,
     icon: DataTypes.STRING,
     banner: DataTypes.STRING,
-    slider: DataTypes.STRING,
+    slider1: DataTypes.STRING,
+    slider2: DataTypes.STRING,
+    slider3: DataTypes.STRING,
     video: DataTypes.STRING,
     username: {
       type: DataTypes.STRING,

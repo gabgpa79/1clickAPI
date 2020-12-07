@@ -278,7 +278,10 @@ class ClienteService {
         web,
         celular,
         hinicio,
-        hfin      
+        hfin,
+        video,
+        direccion,
+        descripcion
       } = dato;
       let newpassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
       Cliente.update(
@@ -300,7 +303,10 @@ class ClienteService {
           facebook: facebook,
           instagram: instagram,
           hinicio: hinicio,
-          hfin: hfin          	
+          hfin: hfin,
+          video: video,
+          direccion: direccion,
+          descripcion: descripcion
         },
         { where: { id: Number(datoId) } }
       )
