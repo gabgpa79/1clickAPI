@@ -38,7 +38,7 @@ class NotaService {
                 .then((nota) => resolve(nota))
                 .catch((reason) => reject(reason));
         });
-    }
+    }    
 
 }
 

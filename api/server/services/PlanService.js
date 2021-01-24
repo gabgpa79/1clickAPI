@@ -24,7 +24,8 @@ class PlanService {
     static getPlan(notaId) {
         return new Promise((resolve, reject) => {
             PlanPagos.findAll({
-                where: { notaId: notaId }
+                where: { notaId: notaId },
+                order: [['cuota','ASC']], 
             })
                 .then((plan) => resolve(plan))
                 .catch((reason) => reject(reason));

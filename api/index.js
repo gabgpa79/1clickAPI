@@ -9,7 +9,7 @@ import compression from "compression";
 import fs from "fs";
 import shell from "shelljs";
 
-var hostname = "192.168.0.10";
+var hostname = "192.168.0.100";
 var port = 4000;
 var app = express();
 var server = http.createServer(app);

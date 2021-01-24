@@ -6,6 +6,6 @@ const router = Router();
 /*usuarios protegidos*/
 router.post('/', ContratoController.add);
 router.get('/:id', ContratoController.getContrato);
-/*const {clienteId, paqueteId, monto }*/
+router.get('/pagar/:id', ContratoController.pagar);
 export default router;
 

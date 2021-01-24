@@ -1,4 +1,5 @@
 import SucursalService from '../services/SucursalService';
+import HorarioService from '../services/HorarioService';
 
 class SucursalController {
 
@@ -23,13 +24,22 @@ class SucursalController {
       })
   }
 
-  static registrar(req, res) {    
-    console.log(req.body)
+  static registrar(req, res) {        
     if (req.body.nombre) {
       Promise.all([SucursalService.add(req.body)])
-        .then(([sucursal]) => {                    
-          Promise.all([SucursalService.getAll(req.body.clienteId)])
-            .then(([sucursales]) => {
+        .then(([sucursal]) => {                             
+            let horas = Array()
+            for (let i = 0; i <= 6; i++) {
+              let dat = {}
+                dat.dia = i;
+                dat.hinicio = '07:00:00'
+                dat.hfin = '19:00:00'
+                dat.sucursalId = sucursal.id
+                horas.push(dat)
+            }         
+
+          Promise.all([HorarioService.add(horas),SucursalService.getAll(req.body.clienteId)])
+            .then(([horarios,sucursales]) => {
               res.status(200).json({ 'message': `Usuario ID: ${sucursal.nombre} registrado`, 'result': sucursales })
             })
         })
@@ -41,13 +51,16 @@ class SucursalController {
   static borrar(req, res) {
     Promise.all([SucursalService.getId(req.params.id)])
       .then(([sucursal]) => {
-        Promise.all([SucursalService.del(req.params.id)])
-          .then(([item]) => {
-              Promise.all([SucursalService.getAll(sucursal.clienteId)])
-                  .then(([sucursales]) => {
-                  res.status(200).json({ 'message': `Usuario ID: ${item} eliminado`, 'result': sucursales })
-                })
-              })      
+        Promise.all([HorarioService.dele(sucursal.id)])
+          .then(([horarios]) => {
+              Promise.all([SucursalService.del(req.params.id)])
+                .then(([item]) => {
+                    Promise.all([SucursalService.getAll(sucursal.clienteId)])
+                        .then(([sucursales]) => {
+                        res.status(200).json({ 'message': `Usuario ID: ${item} eliminado`, 'result': sucursales })
+                      })
+                    })
+                  })         
       })
       .catch(reason => {
         res.status(400).send({ 'message': reason })
@@ -69,6 +82,7 @@ class SucursalController {
         res.status(400).send({ 'message': reason })
       })
   }
+
   
 
 }

@@ -7,19 +7,31 @@ module.exports = (sequelize, DataTypes) => {
     telefono: DataTypes.STRING,
     celular: DataTypes.STRING,
     email: DataTypes.STRING,
-    web: DataTypes.STRING,
-    filename: DataTypes.STRING,
+    web: DataTypes.STRING,    
+    filename: {
+      type: DataTypes.STRING,
+      defaultValue: "filename.jpg"
+    },
     portada: DataTypes.STRING,
     descripcion: DataTypes.STRING,
-    registrado: DataTypes.BOOLEAN,
-    habilitado: DataTypes.BOOLEAN,
+    registrado: DataTypes.BOOLEAN,    
+    habilitado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     hinicio: DataTypes.STRING,
     hfin: DataTypes.STRING,
     hestado: DataTypes.BOOLEAN,
-    coordenadas: DataTypes.STRING,
+    coordenadas: {
+      type: DataTypes.STRING,
+      defaultValue: "temporal"
+    },
     latitude: DataTypes.DECIMAL,
-    longitude: DataTypes.DECIMAL,    
-    snum: DataTypes.INTEGER,
+    longitude: DataTypes.DECIMAL,        
+    snum: {
+      type: DataTypes.INTEGER,
+      defaultValue: 5
+    },
     paqueteId: DataTypes.INTEGER,    
     facebook: DataTypes.STRING,
     instagram: DataTypes.STRING,
@@ -88,6 +100,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     Cliente.belongsTo(models.Paquete, {
       foreignKey: 'paqueteId',
+      onDelete: 'CASCADE'
+    });
+    Cliente.hasMany(models.Horario, {
+      foreignKey: 'clienteId',
       onDelete: 'CASCADE'
     });
 

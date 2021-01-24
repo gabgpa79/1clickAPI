@@ -92,7 +92,7 @@ class ContratoController {
   static getContrato(req, res) {
     Promise.all([
       ContratoService.getItem(req.params.id),
-      ClienteService.getId(req.params.id)
+      ClienteService.getIdSingle(req.params.id)
     ])
       .then(([contrato, cliente]) => {
         Promise.all([NotaService.getNota(contrato.id)])
@@ -102,6 +102,25 @@ class ContratoController {
                 res.status(200).send({ 'message': 'contrato', 'result': { cliente, contrato, nota, plan } })
               })
           })
+      })
+      .catch(reason => {
+        res.status(400).send({ 'message': reason.parent + reason.parent })
+      })
+  }
+
+  static pagar(req, res) {
+    Promise.all([ PlanService.getId(req.params.id)])
+      .then(([plan]) => {                        
+        let dato = {}
+        dato.id = plan.id
+        dato.estado = "pagado"                
+        Promise.all([PlanService.update(dato, dato.id)])
+         .then(([pago]) => {              
+              Promise.all([PlanService.getPlan(plan.notaId)])
+                  .then(([planes]) => {            
+                      res.status(200).send({ 'message': 'contrato', 'result': { planes } })              
+          })
+        })  
       })
       .catch(reason => {
         res.status(400).send({ 'message': reason.parent + reason.parent })

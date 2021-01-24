@@ -9,9 +9,9 @@ sequelize model: create--name NotaCobranza--attributes nro: string, monto: decim
 sequelize model: create--name PlanPagos--attributes monto: decimal, cuota: integer, fecha: date, estado: string, notaId: integer
 sequelize model: create--name Proceso--attributes proceso: string, usuarioId: integer, ingreso: boolean
 sequelize model: create--name Empresa--attributes nombre: string, direccion: string, telefono: string, smtpUser: string, smtpPort: string, smtpHost: string, smtpUser: string, smtpPassword: string
-
 sequelize model: create--name Categoria--attributes nombre: string, estado: boolean
-
-
-
 sequelize model: create-- name Sucursal--attributes nombre: string, estado: boolean, direccion: string, hinicio: string, hfin: string, hestado: boolean, coordenadas: string, clienteId: integer
+
+
+sequelize model: create-- name Horario --attributes dia:integer,hinicio:string,hfin:string,clienteId:integer
+

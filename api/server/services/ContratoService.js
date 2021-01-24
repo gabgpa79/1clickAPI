@@ -14,6 +14,18 @@ class ContratoService {
         });
     }
 
+    static getContratoFull(clienteId) {
+        return new Promise((resolve, reject) => {
+            Contrato.findOne({
+                where: { clienteId: clienteId }
+            })
+                .then((contrato) => {
+                    resolve(contrato)
+                })
+                .catch((reason) => reject(reason));
+        });
+    }
+
     static getContrato(clienteId) {
         return new Promise((resolve, reject) => {
             Contrato.findOne({
@@ -29,7 +41,7 @@ class ContratoService {
     static getItem(clienteId) {
         return new Promise((resolve, reject) => {
             Contrato.findOne({
-                where: { clienteId: clienteId }
+                where: { clienteId: clienteId },                
             })
                 .then((contrato) =>
                     resolve(contrato))

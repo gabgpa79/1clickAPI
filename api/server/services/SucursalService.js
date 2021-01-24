@@ -6,6 +6,7 @@ const Op = Sequelize.Op;
 const { Sucursal } = database;
 
 class SucursalService {
+  
   static getMapas(tipo) {
     return new Promise((resolve, reject) => {      
       Sucursal.findAll({                
