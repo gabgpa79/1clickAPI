@@ -225,8 +225,7 @@ class ClienteController {
             res.status(400).send({ message: reason });
           });
       }
-      static getItem(req, res) {
-        console.log("HOLA")
+      static getItem(req, res) {        
         if (req.params.id) {
           Promise.all([ ClienteService.getId(req.params.id) ])
             .then(([cliente]) => {              
@@ -345,7 +344,26 @@ class ClienteController {
           .catch((reason) => {
             res.status(400).send({ message: reason });
           });
-      }    
+      
+        }
+        static getIte(req, res) {        
+          if (req.params.id) {
+            Promise.all([ ClienteService.getId(req.params.id) ])
+              .then(([cliente]) => {                              
+                  Promise.all([SucursalService.getAlls(cliente.id)])
+                    .then(([sucursales]) => {                                
+                       res.status(200).send({ message: "cliente", cliente:  cliente, sucursales: sucursales });
+                      })
+              })
+              .catch((reason) => {
+                res.status(400).send({ message: reason });
+              });
+          } else {
+            res.status(400).send({ message: "datos faltantes" });
+          }
+        }      
+
+
     }
       function refactorizar(data1, data2){
         const newData = []

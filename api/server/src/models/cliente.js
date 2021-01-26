@@ -36,12 +36,27 @@ module.exports = (sequelize, DataTypes) => {
     facebook: DataTypes.STRING,
     instagram: DataTypes.STRING,
     tipo: DataTypes.STRING,
-    icon: DataTypes.STRING,
-    banner: DataTypes.STRING,
-    slider1: DataTypes.STRING,
-    slider2: DataTypes.STRING,
-    slider3: DataTypes.STRING,
-    video: DataTypes.STRING,
+    icon: DataTypes.STRING,    
+    banner: {
+      type: DataTypes.STRING,
+      defaultValue: "default.jpg"
+    },
+    video: {
+      type: DataTypes.STRING,
+      defaultValue: "https://youtu.be/QC8iQqtG0hg"
+    },   
+    slider1: {
+      type: DataTypes.STRING,
+      defaultValue: "default.jpg"
+    },
+    slider2: {
+      type: DataTypes.STRING,
+      defaultValue: "default.jpg"
+    },
+    slider3: {
+      type: DataTypes.STRING,
+      defaultValue: "default.jpg"
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,

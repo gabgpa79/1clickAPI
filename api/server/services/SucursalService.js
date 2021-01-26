@@ -3,7 +3,7 @@ import database from '../src/models';
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-const { Sucursal } = database;
+const { Sucursal, Horario } = database;
 
 class SucursalService {
   
@@ -50,6 +50,46 @@ class SucursalService {
             "tipo",
             "icon"
           ],
+        })
+        .then(sucursales =>
+          resolve(sucursales))
+        .catch(reason => reject(reason))
+
+    })
+  }
+
+  static getAlls(cliente) {
+    return new Promise((resolve, reject) => {    
+      const dia = new Date()  
+      const dd = dia.getDay()  
+      Sucursal
+        .findAll({
+          raw: true,
+          nest: true,          
+          order: [['id', 'ASC'],],          
+          where: { clienteId: { [Op.eq]: cliente } },
+          attributes: [
+            "id",
+            "nombre",
+            "estado",
+            "direccion",
+            "telefono",
+            "celular",
+            "longitude",
+            "latitude",
+            "clienteId",
+            "tipo",
+            "icon"
+          ],
+          include: [{ 
+            model: Horario,           
+            attributes: ["id", "dia","hinicio","hfin","sucursalId"],           
+            where :  {
+              [Op.and]: [                
+                  { dia: {[Op.eq]: dd }}
+              ]
+            }
+          }]
         })
         .then(sucursales =>
           resolve(sucursales))

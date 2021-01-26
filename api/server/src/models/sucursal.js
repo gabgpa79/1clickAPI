@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'clienteId',
       onDelete: 'CASCADE'
     });
+    Sucursal.hasMany(models.Horario, {
+      foreignKey: 'sucursalId',
+      onDelete: 'CASCADE'
+    });
   };
   return Sucursal;
 };
