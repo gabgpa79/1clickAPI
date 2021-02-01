@@ -17,6 +17,7 @@ class MailController {
    * sendPedido(compraId,email)
    */
 
+  
   static sendMail(tipo, user, fecha) {
     return new Promise((resolve, reject) => {      
       Promise.all([EmpresaService.getEmpresa(1)]).then(([empresa]) => {
@@ -28,7 +29,7 @@ class MailController {
   }
 }
 
-function enviar(tipo, empresa, user, fecha) {
+function enviar(tipo, empresa, user, fecha) {  
   return new Promise((resolve, reject) => {
     let transporter = nodeMailer.createTransport({
       host: empresa.smtpHost,
@@ -41,20 +42,28 @@ function enviar(tipo, empresa, user, fecha) {
     });
     let template = ""
     let templateMsg = ""
+    let emailUser = ""
 
     switch(tipo){
       case "registro":
         template    = registro(user,hostname,fecha);
         templateMsg = "Confirma tu cuenta";
+        emailUser   = user.email;
       break;
       case "aprobacion":
         template    = aprobacion(user,hostname,fecha);
         templateMsg = "Confirma tu cuenta";  
+        emailUser   = user.email;
+      break;
+      case "panico":
+        template    = panico(user);
+        templateMsg = "Alerta !! última confirmación";  
+        emailUser   = user.refemail;
       break;  
     }
    
     let mailOptions = {
-      to: user.email,
+      to: emailUser,
       subject: templateMsg,
       html: template
     };
@@ -91,6 +100,21 @@ function aprobacion(user,hostname,fecha){
                 <a href="${hostname}/login">Iniciar Login</a>         
                 </p>
                 <p>En esta dirección de correo recibirás solo lo importante. </p>            
+                <p>El equipo 1Click</p>
+                </body>`
+  return template                  
+}
+
+function panico(user){  
+  let fecha = new Date()
+  let template =`<body><h2>Hola ${user.refnombre} ,</h2>            
+                <p>Posiblemente el la persona ${user.nombre} , necesita mandar su ubicación para mantenerlo informado. </p>
+                <p>Hora: ${fecha}  </p>
+                <p> 
+                <a href="https://www.google.com/maps/place/${user.latitude},${user.longitude}">Ultimo punto</a>         
+                </p>
+                <p>Si recibes este mail, seguramente quieren que sepas donde esta ubicado. </p>
+                <p>Comunicate de forma inmediata. </p>                  
                 <p>El equipo 1Click</p>
                 </body>`
   return template                  

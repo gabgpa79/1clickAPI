@@ -6,11 +6,12 @@ import fileRoutes from './FileRoutes'
 import sucursalRoutes from './SucursalRoutes'
 import contratoRoutes from './ContratoRoutes'
 import consultasRoutes from './ConsultasRoutes'
+import usuarioRoutes from './UsuarioRoutes'
 /*'
 
 import procesoRoutes from './ProcesoRoutes'
 
-import usuarioRoutes from './UsuarioRoutes'
+
 import reporteRoutes from './ReporteRoutes'*/
 
 
@@ -25,11 +26,12 @@ export default (app) => {
 	app.use('/api/horarios', horarioRoutes);
 	app.use('/api/contratos', contratoRoutes);
 	app.use('/api/consultas', consultasRoutes);
+	app.use('/api/usuarios', usuarioRoutes);	
 
 	/*app.use('/api/contratos', contratoRoutes);
 	app.use('/api/procesos', procesoRoutes);
 		
-	app.use('/api/usuarios', usuarioRoutes);	
+		
 	app.use('/api/reportes', reporteRoutes);*/
 
 }

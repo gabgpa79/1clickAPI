@@ -12,7 +12,12 @@ class UsuarioController {
     if (req.body.nombre) {
       Promise.all([UsuarioService.add(req.body)])
         .then(([usuario]) => {
-          res.status(200).send({ message: "registrado" });
+          if(usuario){
+            res.status(200).send({ usuario });
+          }else{
+            res.status(200).send({ usuario });
+          }
+          
         })
         .catch((reason) => {
           res.status(400).send({ message: reason });
@@ -37,9 +42,10 @@ class UsuarioController {
   }
 
   static sendPanico(req, res) {    
-    const { nombre, refemail  } = req.body    
+    const { nombre, refemail  } = req.body        
+    let fecha = new Date()
     if (refemail && nombre) {      
-      Promise.all([MailController.sendPanico(req.body)])
+      Promise.all([MailController.sendMail("panico",req.body,fecha)])                   
         .then(([user]) => {
           res.status(200).send({ message: "user", result: user });
         })
@@ -71,6 +77,18 @@ class UsuarioController {
         res.status(400).send({ message: reason });
       });    
   }
+
+  static delete(req, res) {    
+    Promise.all([UsuarioService.delete(req.params.id)])
+      .then(([user]) => {
+        res.status(200).send({ message: "user", result: user });
+      })
+      .catch((reason) => {
+        res.status(400).send({ message: reason });
+      });    
+  }
+
+
 
 
 }

@@ -315,9 +315,7 @@ class ClienteService {
             { nombres: { [Op.iLike]: iName } }                        
           ]
         },
-        attributes: ["id","nombres","filename","portada","username","direccion","telefono","estado","descripcion","hestado","habilitado",
-          "registrado","paqueteId","hinicio","hfin"],
-        
+        attributes: ["id","nombres","filename","portada","username","direccion","telefono","estado","descripcion","hestado","habilitado","registrado","paqueteId","hinicio","hfin","celular"],        
         include: [{ 
           model: Horario,           
           attributes: ["id", "dia","hinicio","hfin","clienteId"],           

@@ -11,13 +11,15 @@ module.exports = (sequelize, DataTypes) => {
     refnombre: DataTypes.STRING,
     refemail: DataTypes.STRING   
   }, {});
-  Usuario.beforeSave((user, options) => {
+
+  Usuario.beforeSave((user, options) => {  
     if (user.changed('password')) {
-      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);      
     }
   });
-  Usuario.prototype.comparePassword = function (passw, cb) {
+  Usuario.prototype.comparePassword = function (passw, cb) {    
     bcrypt.compare(passw, this.password, function (err, isMatch) {
+
       if (err) {
         return cb(err);
       }

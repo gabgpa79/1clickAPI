@@ -11,28 +11,7 @@ const { Usuario } = database;
 class UsuarioService {
 
   
-  static add(newUsuario) {    
-    return new Promise((resolve, reject) => {
-        const user = newUsuario
-        user.password = bcrypt.hashSync(newUsuario.password, bcrypt.genSaltSync(10), null);  
-      Usuario.create(user)
-        .then((usuario) => {
-            let payload = { usuario_id: usuario.id, username: usuario.username };
-            let token = jwt.sign(payload, "click2020", {
-              expiresIn: "2629746000",
-            });            
-            resolve({
-                auth: true,
-                message: "Usuario Regitrado",
-                user: usuario,
-                token: token,
-              });
-        }       
-        
-        )
-        .catch((reason) => reject(reason));
-   });
-  }
+ 
 
   static getUsername(username) {      
     return new Promise((resolve, reject) => {
@@ -44,7 +23,7 @@ class UsuarioService {
     });
   }
 
-  static login(username, password) {
+  static login(username, password) {    
     return new Promise((resolve, reject) => {
       Usuario.findOne({
         where: { username: { [Op.eq]: username } }                
@@ -56,7 +35,7 @@ class UsuarioService {
             user: null,
           });
         } else {
-          user.comparePassword(password, (err, isMatch) => {
+          user.comparePassword(password, (err, isMatch) => {            
             if (isMatch && !err) {
               let payload = { user_id: user.id, username: user.username };
               let token = jwt.sign(payload, "click2020", {
@@ -97,7 +76,67 @@ class UsuarioService {
         .catch((reason) => reject(reason));
     });
   }
+
+  static delete(usuarioId) {
+    return new Promise((resolve, reject) => {
+      Usuario
+        .destroy({
+          where: { id: usuarioId }
+        })
+        .then(usuario => resolve(usuario))
+        .catch(reason => reject(reason))
+    })
+  }
+
+  static add(newUsuario) {    
+    return new Promise((resolve, reject) => {      
+      this.validarUsuario(newUsuario.username)
+      .then((usuario)=>{
+        if(usuario){
+          resolve({
+            auth: false,
+            message: "Username ya existente",
+            user: null,
+            token: null,
+          });
+        }else{          
+          Usuario.create(newUsuario)
+        .then((usuario) => {
+            let payload = { usuario_id: usuario.id, username: usuario.username };
+            let token = jwt.sign(payload, "click2020", {
+              expiresIn: "2629746000",
+            });            
+            resolve({
+                auth: true,
+                message: "Usuario Regitrado",
+                user: usuario,
+                token: token,
+              });
+        }       
+        
+        )
+        .catch((reason) => reject(reason));
+        }
+      })
+      
+   });
+  }
+
+  static validarUsuario(usern) {
+    console.log(usern)      
+    return new Promise((resolve, reject) => {      
+      Usuario
+        .findOne({          
+          where: { username: { [Op.iLike]: usern } },
+        })
+        .then((usuario) => resolve((usuario = usuario ? true : false )))
+        .catch(reason => reject(reason))
+    })
+  
+  }
   
 }
+
+
 
 export default UsuarioService;
